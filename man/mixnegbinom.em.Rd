@@ -49,16 +49,15 @@ Jessica A. Myers \email{jmyers6@partners.org}
    \code{\link{negbinom.em}}.
 }
 \examples{
+\dontrun{
 data("simdata", package = "mederrRank")
 summary(simdata)
 
-\dontrun{
 fit <- bhm.mcmc(simdata, nsim = 1000, burnin = 500, scale.factor = 1.1)
 resamp <- bhm.resample(fit, simdata, p.resample = .1,
 	k = c(3, 6, 10, 30, 60, Inf), eta = c(.5, .8, 1, 1.25, 2))
 fit2 <- bhm.constr.resamp(fit, resamp, k = 3, eta = .8)
 plot(fit, fit2, simdata)
-}
 
 theta0 <- c(10, 6, 100, 100, .1)
 ans <- mixnegbinom.em(simdata, theta0, 50000, 0.01,
@@ -66,9 +65,7 @@ ans <- mixnegbinom.em(simdata, theta0, 50000, 0.01,
 ans$theta
 ans$se
 
-\dontrun{
-summary(fit2, ans, simdata)
-}
+summary(fit2, ans, simdata)}
 }
 \keyword{EM}
 \keyword{Empirical Bayes}

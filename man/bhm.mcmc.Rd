@@ -54,6 +54,7 @@ Jessica A. Myers \email{jmyers6@partners.org}
    \code{\link{mederrFit}}.
 }
 \examples{
+\dontrun{
 data("simdata", package = "mederrRank")
 summary(simdata)
 
@@ -67,7 +68,7 @@ theta0 <- c(10, 6, 100, 100, .1)
 ans <- mixnegbinom.em(simdata, theta0, 50000, 0.01, se = TRUE,
 	stratified = TRUE)
 
-summary(fit2, ans, simdata)
+summary(fit2, ans, simdata)}
 }
 \keyword{Bayesian Hierarchical Model}
 \keyword{Markov Chain Monte Carlo}

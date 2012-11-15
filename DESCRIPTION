@@ -1,8 +1,8 @@
 Package: mederrRank
 Title: Bayesian Methods for Identifying the Most Harmful Medication
         Errors
-Version: 0.0.5
-Date: 2011-03-20
+Version: 0.0.7
+Date: 2012-11-15
 Description: This package implements two distinct but related
         statistical approaches to the problem of identifying the
         combinations of medication error characteristics that are more
@@ -19,6 +19,6 @@ Maintainer: Sergio Venturini <sergio.venturini@unibocconi.it>
 Depends: BB, methods, numDeriv, utils
 License: GPL (>= 2)
 LazyLoad: yes
-Packaged: 2012-10-29 08:59:10 UTC; ripley
+Packaged: 2012-11-17 16:32:57 UTC; Sergio
 Repository: CRAN
-Date/Publication: 2012-10-29 08:59:10
+Date/Publication: 2012-11-17 19:41:34

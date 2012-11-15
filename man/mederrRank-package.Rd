@@ -10,8 +10,8 @@
 \tabular{ll}{
 Package: \tab mederrRank\cr
 Type: \tab Package\cr
-Version: \tab 0.0.1\cr
-Date: \tab 2011-02-25\cr
+Version: \tab 0.0.6\cr
+Date: \tab 2011-05-03\cr
 License: \tab GPL 2 or greater\cr
 LazyLoad: \tab yes\cr
 }

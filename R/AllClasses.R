@@ -1,8 +1,4 @@
-.First.lib <- function(lib, pkg) {
-	if (!require(methods)) {
-		stop("'methods' package is required.")
-		require(methods)
-	}
+.onAttach <- function(lib, pkg) {
 	packageStartupMessage(sprintf("Package %s (%s) loaded.
 To cite, see citation(\"%s\")\n", pkg, packageDescription(pkg)$Version, pkg))
 }
@@ -10,7 +6,7 @@ To cite, see citation(\"%s\")\n", pkg, packageDescription(pkg)$Version, pkg))
 setClass(Class = "mederrData", representation(data = "data.frame", size = "numeric", numi = "numeric", numj = "numeric"))
 
 setMethod("initialize", "mederrData",
-		function(.Object, data = data.frame(NA), size = numeric(0), numi = numeric(0), numj = numeric(0)) {
+		function(.Object, data = data.frame(NA)) {
 			tmp <- as.data.frame(data)
 			.Object@data <- tmp
 			names(.Object@data) <- c("y", "N", "groupi", "groupj")
@@ -291,7 +287,7 @@ setMethod("plot",
 			lp <- logunpost(x)
 			interaction.plot(col(lp), row(lp), lp, xaxt = "n", xlab = bquote(eta), lty = 1:length(x@grd$k), legend = FALSE,
 					ylab = "Log unnormalized marginal density")
-			axis(1, at = 1:length(x@grd$eta), label = x@grd$eta)
+			axis(1, at = 1:length(x@grd$eta), labels = x@grd$eta)
 			legend((length(x@grd$eta) - 1), max(lp), legend = tapply(x@grd$k, 1:length(x@grd$k), function(z) paste("k = ", z, sep = "")),
 					lty = (1:length(x@grd$k)))
 		}

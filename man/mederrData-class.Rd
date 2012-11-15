@@ -10,7 +10,13 @@
 	This class encapsulates the data specification for a Bayesian Hierarchical Model used to identify the most harmful medication errors as described in Myers et al. (2011).
 }
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("mederrData", data, size, numi, numj)}.
+Objects can be created by calls of the form \code{new("mederrData", data)}, where the \code{data} argument has to be a matrix or a data frame object that contains the following (\emph{numeric}) information for each error profile/hospital combination:
+\enumerate{
+	\item the number of times (\eqn{y}) that profile \eqn{i} in hospital \eqn{j} was reported with harm;
+	\item the total number of times (\eqn{N}) that the error profile \eqn{i} is cited on a report from hospital \eqn{j},
+	\item the error profile \eqn{i} identification code,
+	\item the hospital \eqn{j} identification code.
+}
 }
 \section{Slots}{
   \describe{
@@ -41,8 +47,18 @@ Jessica A. Myers \email{jmyers6@partners.org}
    \code{\link{bhm.resample}},
    \code{\link{mixnegbinom.em}}.
 }
-%\examples{
-%showClass("mederrData")
-%}
+\examples{
+ng <- 50
+i <- rep(1:ng, ng)
+j <- rep(1:ng, each = ng)
+N <- rpois(ng^2, 3 + .05*i - .01*j) + 1
+
+theta_i <- rgamma(ng, 5, 5) - 4/5
+delta_j <- rnorm(ng, 0, .2)
+logit <- -3 + theta_i[i] + delta_j[j]
+y <- rbinom(ng^2, N, exp(logit)/(1 + exp(logit)))
+
+simdata <- new("mederrData", data = cbind(y, N, i, j))
+}
 \keyword{classes}
 \keyword{methods}

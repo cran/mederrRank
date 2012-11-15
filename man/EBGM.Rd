@@ -33,6 +33,7 @@ Jessica A. Myers \email{jmyers6@partners.org}
    \code{\link{negbinom.em}}.
 }
 \examples{
+\dontrun{
 data("simdata", package = "mederrRank")
 summary(simdata)
 
@@ -47,7 +48,7 @@ ans <- mixnegbinom.em(simdata, theta0, 50000, 0.01,
 
 ni <- simdata@numi
 rank(EBGM(ans)[1:ni])
-summary(fit2, ans, simdata)
+summary(fit2, ans, simdata)}
 }
 \keyword{Empirical Bayes}
 \keyword{Medication Errors}
