@@ -147,9 +147,9 @@ setMethod("plot",
 					j <- j + 1
 				}
 			}
-			tmp.err <- cbind(tmp.err, bins = bins.errors)
+			tmp.err <- cbind(tmp.err, nbins = bins.errors)
 			tmp.err <- tmp.err[sort(tmp.err$idx, index.return = TRUE)$ix, ]
-			err <- data.frame(y = marg.err.y, N = marg.err.N, p = marg.err.p, bins = tmp.err$bins)
+			err <- data.frame(y = marg.err.y, N = marg.err.N, p = marg.err.p, nbins = tmp.err$nbins)
 			
 			if (length(nbins.hosp) == 1) {
 				nbins <- nbins.hosp + 1
@@ -189,23 +189,23 @@ setMethod("plot",
 					j <- j + 1
 				}
 			}
-			tmp.hosp <- cbind(tmp.hosp, bins = bins.hospitals)
+			tmp.hosp <- cbind(tmp.hosp, nbins = bins.hospitals)
 			tmp.hosp <- tmp.hosp[sort(tmp.hosp$idx, index.return = TRUE)$ix, ]
-			hosp <- data.frame(y = marg.hosp.y, N = marg.hosp.N, p = marg.hosp.p, bins = tmp.hosp$bins)
+			hosp <- data.frame(y = marg.hosp.y, N = marg.hosp.N, p = marg.hosp.p, nbins = tmp.hosp$nbins)
 			
 			par(mfrow = c(2, 2))
 			
-			boxplot(jitter(p, amount = jittering) ~ bins, data = err, subset = (bins > 0), main = "Error profiles", 
-					names = bins.err.lbl[as.numeric(names(table(err$bins)))], ylab = "p", cex.axis = .7, xaxt = "n")
-			axis(1, at = seq(1, nbins.e, by = 2), labels = (bins.err.lbl[as.numeric(names(table(err$bins)))])[seq(1, nbins.e, by = 2)], cex.axis = .7)
-			boxplot(jitter(p, amount = jittering) ~ bins, data = hosp, subset = (bins > 0), main = "Hospitals",
-					names = bins.hosp.lbl[as.numeric(names(table(hosp$bins)))], ylab = "p", cex.axis = .7, xaxt = "n")
-			axis(1, at = seq(1, nbins.h, by = 2), labels = (bins.hosp.lbl[as.numeric(names(table(hosp$bins)))])[seq(1, nbins.h, by = 2)], cex.axis = .7)
+			boxplot(jitter(p, amount = jittering) ~ nbins, data = err, subset = (nbins > 0), main = "Error profiles", 
+					names = bins.err.lbl[as.numeric(names(table(err$nbins)))], ylab = "p", cex.axis = .7, xaxt = "n")
+			axis(1, at = seq(1, nbins.e, by = 2), labels = (bins.err.lbl[as.numeric(names(table(err$nbins)))])[seq(1, nbins.e, by = 2)], cex.axis = .7)
+			boxplot(jitter(p, amount = jittering) ~ nbins, data = hosp, subset = (nbins > 0), main = "Hospitals",
+					names = bins.hosp.lbl[as.numeric(names(table(hosp$nbins)))], ylab = "p", cex.axis = .7, xaxt = "n")
+			axis(1, at = seq(1, nbins.h, by = 2), labels = (bins.hosp.lbl[as.numeric(names(table(hosp$nbins)))])[seq(1, nbins.h, by = 2)], cex.axis = .7)
 			
-			barplot(height = as.numeric(table(err$bins[err$bins > 0])), space = 0, ylab = "Frequency", xlab = expression(N['i+']))
-			axis(1, at = seq(.5, nbins.e, by = 2), labels = (bins.err.lbl[as.numeric(names(table(err$bins)))])[seq(1, nbins.e, by = 2)], cex.axis = .7)
-			barplot(height = as.numeric(table(hosp$bins[hosp$bins > 0])), space = 0, ylab = "Frequency", xlab = expression(N['+j']))
-			axis(1, at = seq(.5, nbins.h, by = 2), labels = (bins.hosp.lbl[as.numeric(names(table(hosp$bins)))])[seq(1, nbins.h, by = 2)], cex.axis = .7)
+			barplot(height = as.numeric(table(err$nbins[err$nbins > 0])), space = 0, ylab = "Frequency", xlab = expression(N['i+']))
+			axis(1, at = seq(.5, nbins.e, by = 2), labels = (bins.err.lbl[as.numeric(names(table(err$nbins)))])[seq(1, nbins.e, by = 2)], cex.axis = .7)
+			barplot(height = as.numeric(table(hosp$nbins[hosp$nbins > 0])), space = 0, ylab = "Frequency", xlab = expression(N['+j']))
+			axis(1, at = seq(.5, nbins.h, by = 2), labels = (bins.hosp.lbl[as.numeric(names(table(hosp$nbins)))])[seq(1, nbins.h, by = 2)], cex.axis = .7)
 		}
 )
 

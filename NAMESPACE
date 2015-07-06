@@ -1,6 +1,3 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
-
 # Export all names
 exportPattern(".")
 
@@ -11,3 +8,6 @@ import(
   numDeriv,
   utils
 )
+
+importFrom("graphics", "abline", "axis", "barplot", "boxplot", "legend", "mtext", "par", "segments")
+importFrom("stats", "dt", "interaction.plot", "nlm", "rbinom", "rgamma", "rmultinom", "rnbinom", "rnorm", "runif", "var")
