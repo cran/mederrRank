@@ -22,13 +22,13 @@ llDiffD <- function(dat, deltaj, cand, thetai, gamma, tau2) {
 
 bhm.mcmc <- function(dat, nsim = 2000, burnin = 500, scale.factor = 1, adaptive.int = 100, adaptive.max = 1000,
 		prior = NULL, init = NULL, tuneD = NULL, tuneT = NULL) {
-	
 	colVs <- function(x) {
-		out <- (colSums(x*x)-nrow(x)*colMeans(x)^2)/(nrow(x)-1)
+		out <- (colSums(x*x) - nrow(x)*colMeans(x)^2)/(nrow(x) - 1)
+
 		return(out)
 	}
 	
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 	
@@ -108,12 +108,12 @@ bhm.mcmc <- function(dat, nsim = 2000, burnin = 500, scale.factor = 1, adaptive.
 
 dst <- function(x, sigma, k, eta) {
 	out <- (2/(eta + 1/eta)/sigma)*ifelse(x >= 0, dt(x/eta/sigma, df = k), dt(x*eta/sigma, df = k))
-	return(out)
+	
+  return(out)
 }
 
 logp <- function(theta, deltaj, sigma2, i, k, eta, dat) {
-
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 	
@@ -125,10 +125,10 @@ logp <- function(theta, deltaj, sigma2, i, k, eta, dat) {
 
 bhm.resample <- function(model, dat, p.resample = 0.1, k, eta) {
 
-	if (class(model) != "mederrFit") {
+	if (!inherits(model, "mederrFit")) {
 		stop("Model argument not of class 'mederrFit'. Type '?mederrFit' for help.")
 	}
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 
@@ -166,13 +166,13 @@ bhm.resample <- function(model, dat, p.resample = 0.1, k, eta) {
 		for(y in 1:neta) {
 			eta <- grd$eta[y]
 			
-			for(i in 1:ni) { 
+			for(i in 1:ni) {
 				modes[[i]] <- nlm(logp, p = 0, hessian = TRUE, deltaj = deltaj.hat, sigma2 = sigma2.hat, i = i, k = k, eta = eta, dat)
 			}
 			t.new[x, y, ] <- unlist(sapply(modes, function(x) x["estimate"]))
 			h.new <- unlist(sapply(modes, function(x) x["hessian"]))
 			
-			A[x, y, ] <- sqrt(h.old / h.new)
+			A[x, y, ] <- sqrt(h.old/h.new)
 			lf <- t.new[x, y, ] + A[x, y, ]*(model@thetai - t.old)
 			
 			for(i in 1:ni) {
@@ -189,11 +189,12 @@ bhm.resample <- function(model, dat, p.resample = 0.1, k, eta) {
 	}
 	options(ow)
 	out <- new("mederrResample", log.ir = log.ir, samp = samp, A = A, t.new = t.new, t.old = t.old, grd = grd)
+
 	return(out)
 }
 
 logunpost <- function(resample) {
-	if (class(resample) != "mederrResample") {
+	if (!inherits(resample, "mederrResample")) {
 		stop("Resample argument not of class 'mederrResample'. Type '?mederrResample' for help.")
 	}
 	
@@ -205,10 +206,10 @@ logunpost <- function(resample) {
 }
 
 bhm.constr.resamp <- function(model, resample, k = Inf, eta = 1) {
-	if (class(model) != "mederrFit") {
+	if (!inherits(model, "mederrFit")) {
 		stop("model argument not of class 'mederrFit'. Type '?mederrFit' for help.")
 	}
-	if (class(resample) != "mederrResample") {
+	if (!inherits(resample, "mederrResample")) {
 		stop("Resample argument not of class 'mederrResample'. Type '?mederrResample' for help.")
 	}
 	
@@ -228,7 +229,7 @@ bhm.constr.resamp <- function(model, resample, k = Inf, eta = 1) {
 }
 
 bayes.rank <- function(model) {
-	if (class(model) != "mederrFit") {
+	if (!inherits(model, "mederrFit")) {
 		stop("Model argument not of class 'mederrFit'. Type '?mederrFit' for help.")
 	}
 	
@@ -237,17 +238,17 @@ bayes.rank <- function(model) {
 	M <- nrow(theta)
 	rank <- numeric(length = ni)
 	for(i in 1:ni) {
-		rank[i] <- sum((theta[,i] - theta) >= 0)/M
+		rank[i] <- sum((theta[, i] - theta) >= 0)/M
 	}
 	out <- rank
 	return(out)
 }
 
 post.rep <- function(model, dat) {
-	if (class(model) != "mederrFit") {
+	if (!inherits(model, "mederrFit")) {
 		stop("Model argument not of class 'mederrFit'. Type '?mederrFit' for help.")
 	}
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 	
@@ -385,7 +386,7 @@ mixnegbinom.em <- function(dat, theta0, maxiter = 50000, toler = 0.01, se = TRUE
 		return(sum(fnc*theta[1:n]))
 	}
 	
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 	
@@ -521,7 +522,7 @@ negbinom.em <- function(dat, theta0, maxiter = 50000, toler = 0.01, se = TRUE, s
 		return(sum(fnc))
 	}
 	
-	if (class(dat) != "mederrData") {
+	if (!inherits(dat, "mederrData")) {
 		stop("dat argument not of class 'mederrData'. Type '?mederrData' for help.")
 	}
 	
